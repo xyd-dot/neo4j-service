@@ -138,11 +138,4 @@ public class DrugDataRepositoryImpl extends DataAbstractService implements DrugD
         deleteOne(drugDataNode);
     }
 
-    @Override
-    public List<DrugDataNode> findByTime() {
-        CypherObject cypherObject = new CypherObject();
-        cypherObject.setCypher("MATCH (n:drug) where n.createTime > \"2025-11-14\"  RETURN n ");
-        return findList(cypherObject,DrugDataNode.class);
-    }
-
 }

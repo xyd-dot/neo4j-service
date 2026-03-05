@@ -18,10 +18,10 @@ public class BeanConfigMq {
     private String namesrvAddr;
     @Value("${mq.neo4j.topic.data-topic}")
     private String contractTopic;
-    @Value("${mq.neo4j.consumer.data-groupone}")
-    private String contractConsumerGroupOneName;
-    @Value("${mq.neo4j.consumer.data-grouptwo}")
-    private String contractConsumerGroupTwoName;
+    @Value("${data-groupone}")
+    private String consumerGroupOneName;
+    @Value("${data-grouptwo}")
+    private String consumerGroupTwoName;
 
     @Autowired
     ContractMQConsumerGroupTwo contractMQConsumerGroupTwo;
@@ -32,9 +32,9 @@ public class BeanConfigMq {
     @Bean
     public DefaultMQPushConsumer getMQGroupOneConsumer() throws Exception {
 
-        checkParam(contractConsumerGroupOneName,namesrvAddr,contractTopic);
+        checkParam(consumerGroupOneName,namesrvAddr,contractTopic);
 
-        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer(contractConsumerGroupOneName);
+        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer(consumerGroupOneName);
         consumer.setNamesrvAddr(namesrvAddr);
         consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_LAST_OFFSET);//从上次消费的offset继续消费。
         consumer.registerMessageListener(contractMQConsumerGroupOne);
@@ -42,7 +42,7 @@ public class BeanConfigMq {
         try {
             consumer.subscribe(contractTopic,"*");
             consumer.start();
-            log.info("已启动Conusmer【gruop:" + contractConsumerGroupOneName + "，监听TOPIC-{" + contractTopic + "}");
+            log.info("已启动Conusmer【gruop:" + consumerGroupOneName + "，监听TOPIC-{" + contractTopic + "}");
         } catch (MQClientException e) {
             log.error("rocketMQ DataSync start fail................");
         }
@@ -51,8 +51,8 @@ public class BeanConfigMq {
 
     @Bean
     public DefaultMQPushConsumer getMQGroupTwoConsumer() throws Exception {
-        checkParam(contractConsumerGroupTwoName,namesrvAddr,contractTopic);
-        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer(contractConsumerGroupTwoName);
+        checkParam(consumerGroupTwoName,namesrvAddr,contractTopic);
+        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer(consumerGroupTwoName);
         consumer.setNamesrvAddr(namesrvAddr);
         consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_LAST_OFFSET);//从上次消费的offset继续消费。
         consumer.registerMessageListener(contractMQConsumerGroupTwo);
@@ -60,7 +60,7 @@ public class BeanConfigMq {
         try {
             consumer.subscribe(contractTopic,"*");
             consumer.start();
-            log.info("已启动Conusmer【gruop:" + contractConsumerGroupTwoName + "，监听TOPIC-{" + contractTopic + "}");
+            log.info("已启动Conusmer【gruop:" + consumerGroupTwoName + "，监听TOPIC-{" + contractTopic + "}");
         } catch (MQClientException e) {
             log.error("rocketMQ DataSync start fail................");
         }

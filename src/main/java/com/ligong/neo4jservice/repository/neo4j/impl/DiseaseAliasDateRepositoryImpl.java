@@ -1,6 +1,5 @@
 package com.ligong.neo4jservice.repository.neo4j.impl;
 
-import com.ligong.neo4jservice.domain.node.ICDDataNode;
 import com.ligong.neo4jservice.repository.neo4j.DiseaseAliasDateRepository;
 import com.ligong.neo4jservice.service.neo4j.CypherObject;
 import com.ligong.neo4jservice.service.neo4j.DataAbstractService;
@@ -18,35 +17,6 @@ import java.util.Map;
 @Repository
 public class DiseaseAliasDateRepositoryImpl extends DataAbstractService implements DiseaseAliasDateRepository {
 
-    @Override
-    public List<String> findIcdByDiseaseAlias(String diseaseAlias) {
-        CypherObject cypherObject = new CypherObject();
-        cypherObject.setCypher("MATCH (alias:disease_alias {disease_alias_name: $diseaseAlias}) MATCH (i:icd)-[:HAS_ALIAS]->(alias) RETURN i.icd_name");
-        Map<String,Object> param = new HashMap<>();
-        param.put("diseaseAlias",diseaseAlias);
-        cypherObject.setParamMap(param);
-        return findList(cypherObject, String.class);
-    }
-
-    @Override
-    public List<String> findIcdsByDiseaseAlias(List<String> diseaseAlias) {
-        CypherObject cypherObject = new CypherObject();
-        cypherObject.setCypher("MATCH (i:icd)-[:HAS_ALIAS]-(alias:disease_alias) WHERE alias.disease_alias_name IN $diseaseAlias RETURN distinct i.icd_name AS icdNames");
-        Map<String,Object> param = new HashMap<>();
-        param.put("diseaseAlias",diseaseAlias);
-        cypherObject.setParamMap(param);
-        return findList(cypherObject, String.class);
-    }
-
-    @Override
-    public List<ICDDataNode> findIcdNodesByDiseaseAlias(List<String> diseaseAlias) {
-        CypherObject cypherObject = new CypherObject();
-        cypherObject.setCypher("MATCH (i:icd)-[:HAS_ALIAS]-(alias:disease_alias) WHERE alias.disease_alias_name IN $diseaseAlias RETURN i");
-        Map<String,Object> param = new HashMap<>();
-        param.put("diseaseAlias",diseaseAlias);
-        cypherObject.setParamMap(param);
-        return findList(cypherObject, ICDDataNode.class);
-    }
 
     @Override
     public List<String> findDiseaseByDiseaseAlias(String diseaseAlias) {

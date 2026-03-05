@@ -18,17 +18,11 @@ public interface DiseaseDataRepository {
     //根据标准名称查询别名
     List<String> findAliasesByDiseaseNames(List<String> standardDiseaseNames);
 
-    //通过疾病查询icd
-    List<String> findIcdNamesByDiseaseNames( List<String> diseaseNames);
-
     //通过疾病名称查询药物
     List<DrugDataNode> findDrugNodesByDiseaseNames(List<String> diseaseNames);
 
     //通过疾病名称查询药物
     List<DrugDataNode> findDrugNodesByDiseaseName(String diseaseName);
-
-    //根据疾病查询icd名称
-    List<String> findIcdNamesByDiseaseName(String diseaseName);
 
     void updateByDiseaseName(DiseaseDataNode diseaseDataNode);
 

@@ -23,7 +23,6 @@ public class DiseaseDataNode {
     private Boolean is_critical_disease;
     private String disease_alias_name;
 
-    //男，女性疾病     男性用药、女性用药、通用用药
     private String gender_category;
 
     private String createTime;

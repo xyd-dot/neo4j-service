@@ -8,11 +8,11 @@ mybatis:
 
 neo4j:
   ds1:
-    uri: bolt://10.25.17.127:7687
+    uri: bolt://127.0.0.1:7687
     username: neo4j
     password: neo4j
   ds2:
-    uri: bolt://10.25.17.127:7680
+    uri: bolt://127.0.0.1:7680
     username: neo4j
     password: neo4j
 
@@ -23,13 +23,13 @@ logging:
 
 mq:
   neo4j-mq-server: 127.0.0.1:9876
-  ykq-mq-server: ${mq.neo4j-mq-server}
+  mq-server: ${mq.neo4j-mq-server}
   instanceName: instanceName0
   neo4j:
     consumer:
-      data-groupone: CID_test_neo4j_save_data_groupone
-      data-grouptwo: CID_test_neo4j_save_data_grouptwo
+      data-groupone: data_groupone
+      data-grouptwo: data_grouptwo
     topic:
-      data-topic: test_neo4j_save_data
+      data-topic: neo4j_save_data
 
 

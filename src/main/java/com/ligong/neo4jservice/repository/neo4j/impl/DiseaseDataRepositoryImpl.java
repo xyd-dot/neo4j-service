@@ -40,16 +40,6 @@ public class DiseaseDataRepositoryImpl extends DataAbstractService implements Di
     }
 
     @Override
-    public List<String> findIcdNamesByDiseaseNames(List<String> diseaseNames) {
-        CypherObject cypherObject = new CypherObject();
-        cypherObject.setCypher("MATCH (d:disease_data)-[:HAS_ALIAS]->(alias:disease_alias)<-[:HAS_ALIAS]-(icd:icd) WHERE d.standard_disease_name IN $diseaseNames RETURN DISTINCT icd.icd_name AS icdName");
-        Map<String,Object> param = new HashMap<>();
-        param.put("diseaseNames",diseaseNames);
-        cypherObject.setParamMap(param);
-        return findList(cypherObject, String.class);
-    }
-
-    @Override
     public List<DrugDataNode> findDrugNodesByDiseaseNames(List<String> diseaseNames) {
         CypherObject cypherObject = new CypherObject();
         cypherObject.setCypher("MATCH (dis:disease_data)-[:HAS_INDICATION]-(drug:drug) WHERE dis.standard_disease_name IN $diseaseNames RETURN drug");
@@ -67,16 +57,6 @@ public class DiseaseDataRepositoryImpl extends DataAbstractService implements Di
         param.put("diseaseName",diseaseName);
         cypherObject.setParamMap(param);
         return findList(cypherObject, DrugDataNode.class);
-    }
-
-    @Override
-    public List<String> findIcdNamesByDiseaseName(String diseaseName) {
-        CypherObject cypherObject = new CypherObject();
-        cypherObject.setCypher("MATCH (d:disease_data {standard_disease_name: $diseaseName})-[:HAS_ALIAS]->(alias:disease_alias)<-[:HAS_ALIAS]-(icd:icd) RETURN DISTINCT icd.icd_name");
-        Map<String,Object> param = new HashMap<>();
-        param.put("diseaseName",diseaseName);
-        cypherObject.setParamMap(param);
-        return findList(cypherObject, String.class);
     }
 
     @Override
